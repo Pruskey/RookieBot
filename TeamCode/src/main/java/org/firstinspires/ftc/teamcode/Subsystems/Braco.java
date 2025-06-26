@@ -18,14 +18,14 @@ public class Braco {
         this.Liberdade1 = l1;
         this.Liberdade2 = l2;
 
-        pid1 = new PIDController.PID(0.01, 0.0, 0.0002, 0);
-        pid2 = new PIDController.PID(0.01, 0.0, 0.0002, 0);
+        pid1 = new PIDController.PID(0.002, 0.0, 0.00002, 0);
+        pid2 = new PIDController.PID(0.0, 0.0, 0.000, 0);
 
         Liberdade1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Liberdade2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        Liberdade1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Liberdade2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Liberdade1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Liberdade2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     public void setSetpoints(int s1, int s2) {
@@ -40,8 +40,8 @@ public class Braco {
         double power1 = pid1.getValue(setpoint1 - actual1);
         double power2 = pid2.getValue(setpoint2 - actual2);
 
-        Liberdade1.setPower(Math.max(-1, Math.min(1, power1)));
-        Liberdade2.setPower(Math.max(-1, Math.min(1, power2)));
+        Liberdade1.setPower(power1);
+        Liberdade2.setPower(power2);
     }
 
     public int getPos1() { return Liberdade1.getCurrentPosition(); }
