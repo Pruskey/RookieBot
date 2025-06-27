@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Braco;
 import org.firstinspires.ftc.teamcode.Subsystems.Garra;
+import org.firstinspires.ftc.teamcode.Subsystems.PIDController;
 
 @TeleOp
         (name = "TeleOp Multithread")
@@ -35,9 +36,6 @@ public class FinalTeleOp extends LinearOpMode {
         braco = new Braco(l1, l2);
         garra = new Garra(clawServo);
 
-        telemetry.addLine("Ready");
-        telemetry.update();
-
         waitForStart();
 
 
@@ -45,11 +43,11 @@ public class FinalTeleOp extends LinearOpMode {
             garra.update(gamepad1.x);
 
             if (gamepad1.a) {
-                braco.setSetpoints(2348, 30);
+                braco.setSetpoints(700, 0);
             } else if (gamepad1.y) {
-                braco.setSetpoints(2180, 113);
+                braco.setSetpoints(2100, 100);
             } else if (gamepad1.b) {
-                braco.setSetpoints(0, 0);
+                braco.setSetpoints(2337, 33);
             }
             braco.update();
 
@@ -59,8 +57,10 @@ public class FinalTeleOp extends LinearOpMode {
             double leftPower = -Turnner + Drive;
             Right.setPower(rightPower);
             Left.setPower(leftPower);
+
             telemetry.addData("Braco1 Pos", braco.getPos1());
             telemetry.addData("Braco2 Pos", braco.getPos2());
+
             telemetry.update();
         }
 
